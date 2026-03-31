@@ -27,8 +27,13 @@ resource "aws_network_acl_rule" "acl_rule_egress" {
   to_port        = 65535
 }
 
-resource "aws_network_acl_association" "public" {
-  subnet_id      = aws_subnet.public.id
+resource "aws_network_acl_association" "public_1" {
+  subnet_id      = aws_subnet.public_1.id
+  network_acl_id = aws_network_acl.acl.id
+}
+
+resource "aws_network_acl_association" "public_2" {
+  subnet_id      = aws_subnet.public_2.id
   network_acl_id = aws_network_acl.acl.id
 }
 
