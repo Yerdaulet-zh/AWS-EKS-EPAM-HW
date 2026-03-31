@@ -5,6 +5,6 @@ terraform {
     region       = "eu-central-1"
     encrypt      = true
     use_lockfile = true
-    profile      = "second"
+    profile      = "809683733742_AdministratorAccess"
   }
 }
