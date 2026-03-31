@@ -1,4 +1,4 @@
-resource "aws_subnet" "public" {
+resource "aws_subnet" "public_1" {
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = local.public_subnet_cidr1
   availability_zone       = "${local.region}a"
@@ -35,8 +35,12 @@ resource "aws_subnet" "private" {
   }
 }
 
-output "public_subnet_id" {
-  value = aws_subnet.public.id
+output "public_subnet_id_1" {
+  value = aws_subnet.public_1.id
+}
+
+output "public_subnet_id_2" {
+  value = aws_subnet.public_2.id
 }
 
 output "private_subnet_id" {
