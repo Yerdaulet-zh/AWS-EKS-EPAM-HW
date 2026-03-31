@@ -11,7 +11,3 @@ variable "kms_key_arn" {
   description = "etcd secret keys encryption and decryption"
   type        = string
 }
-
-variable "vpc_id" {
-  type = string
-}
