@@ -11,5 +11,5 @@ terraform {
 
 provider "aws" {
   region  = "eu-central-1"
-  profile = "second"
+  profile = "809683733742_AdministratorAccess"
 }
