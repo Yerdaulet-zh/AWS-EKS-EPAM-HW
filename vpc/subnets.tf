@@ -1,14 +1,27 @@
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = local.public_subnet_cidr
+  cidr_block              = local.public_subnet_cidr1
   availability_zone       = "${local.region}a"
   map_public_ip_on_launch = true
 
   tags = {
     Project = "${local.project_name}"
-    Name    = "Public Subent"
+    Name    = "The First Public Subent"
   }
 }
+
+resource "aws_subnet" "public_2" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = local.public_subnet_cidr2
+  availability_zone       = "${local.region}b"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Project = "${local.project_name}"
+    Name    = "The Second Public Subent"
+  }
+}
+
 
 resource "aws_subnet" "private" {
   vpc_id                  = aws_vpc.vpc.id
