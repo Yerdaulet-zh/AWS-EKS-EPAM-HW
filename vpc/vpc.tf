@@ -6,3 +6,7 @@ resource "aws_vpc" "vpc" {
     Project = "${local.project_name}"
   }
 }
+
+output "vpc_id" {
+  value = aws_vpc.vpc.id
+}
