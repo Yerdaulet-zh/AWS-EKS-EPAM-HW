@@ -28,16 +28,21 @@ resource "aws_network_acl_rule" "acl_rule_egress" {
 }
 
 resource "aws_network_acl_association" "public_1" {
-  subnet_id      = aws_subnet.public_1.id
+  subnet_id      = aws_subnet.public_1a.id
   network_acl_id = aws_network_acl.acl.id
 }
 
 resource "aws_network_acl_association" "public_2" {
-  subnet_id      = aws_subnet.public_2.id
+  subnet_id      = aws_subnet.public_2b.id
   network_acl_id = aws_network_acl.acl.id
 }
 
-# resource "aws_network_acl_association" "private" {
-#   subnet_id      = aws_subnet.private.id
-#   network_acl_id = aws_network_acl.acl.id
-# }
+resource "aws_network_acl_association" "private_1" {
+  subnet_id      = aws_subnet.private_1a.id
+  network_acl_id = aws_network_acl.acl.id
+}
+
+resource "aws_network_acl_association" "private_2" {
+  subnet_id      = aws_subnet.private_2b.id
+  network_acl_id = aws_network_acl.acl.id
+}
