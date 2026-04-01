@@ -5,8 +5,10 @@ resource "aws_subnet" "public_1a" {
   map_public_ip_on_launch = true
 
   tags = {
-    Project = "${local.project_name}"
-    Name    = "Public Subnet 1"
+    Name                                            = "Public Subnet 1"
+    Project                                         = local.project_name
+    "kubernetes.io/role/elb"                        = "1"
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "owned"
   }
 }
 
@@ -17,8 +19,10 @@ resource "aws_subnet" "public_2b" {
   map_public_ip_on_launch = true
 
   tags = {
-    Project = "${local.project_name}"
-    Name    = "Public Subnet 2"
+    Name                                            = "Public Subnet 2"
+    Project                                         = local.project_name
+    "kubernetes.io/role/elb"                        = "1"
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "owned"
   }
 }
 
@@ -29,8 +33,10 @@ resource "aws_subnet" "private_1a" {
   map_public_ip_on_launch = false
 
   tags = {
-    Project = "${local.project_name}"
-    Name    = "Private Subnet 1"
+    Name                                            = "Private Subnet 1"
+    Project                                         = local.project_name
+    "kubernetes.io/role/elb"                        = "1"
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "owned"
   }
 }
 
@@ -41,8 +47,10 @@ resource "aws_subnet" "private_2b" {
   map_public_ip_on_launch = false
 
   tags = {
-    Project = "${local.project_name}"
-    Name    = "Private Subnet 2"
+    Name                                            = "Private Subnet 2"
+    Project                                         = local.project_name
+    "kubernetes.io/role/elb"                        = "1"
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "owned"
   }
 }
 
