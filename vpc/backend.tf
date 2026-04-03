@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket       = "shapagat-medeu-terraform-states"
-    key          = "second/eks-epam-hw/terraform.tfstate"
+    bucket       = "epam-terrform-state-bucket"
+    key          = "eks-epam-hw/vpc/terraform.tfstate"
     region       = "eu-central-1"
     encrypt      = true
     use_lockfile = true
