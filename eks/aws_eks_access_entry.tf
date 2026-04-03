@@ -1,5 +1,5 @@
 data "aws_iam_role" "sso_admin" {
-  name = "AWSReservedSSO_AdministratorAccess_f6a224f06a00288a"
+  name = "AWSReservedSSO_AdministratorAccess_3586681a9dcf4676"
 }
 
 resource "aws_eks_access_entry" "admin_access" {
