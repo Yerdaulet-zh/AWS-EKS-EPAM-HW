@@ -12,18 +12,23 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
   cluster_name    = aws_eks_cluster.main.name
   node_group_name = "general-purpose-nodes"
   node_role_arn   = aws_iam_role.eks_node_group_general_purpose_role.arn
-  subnet_ids      = values(var.private_subnets)
 
-  ami_type       = "AL2023_ARM_64_STANDARD" # "AL2023_x86_64_STANDARD"
-  instance_types = ["t4g.medium"]
+  subnet_ids = values(var.private_subnets)
+
+  capacity_type   = "SPOT"
+  instance_types  = ["t4g.medium", "t4g.large"]
+  ami_type        = "AL2023_ARM_64_STANDARD"
+  release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
 
   scaling_config {
-    desired_size = 1
-    max_size     = 3
-    min_size     = 1
+    desired_size = 3
+    min_size     = 3
+    max_size     = 4
   }
 
-  release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
+  labels = {
+    role = "frontend"
+  }
 
   depends_on = [
     aws_iam_role_policy_attachment.amazon_eks_worker_node_policy,
@@ -34,31 +39,59 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
   ]
 }
 
-# resource "aws_eks_node_group" "cache_nodes" {
+resource "aws_eks_node_group" "cache_nodes" {
+  cluster_name    = aws_eks_cluster.main.name
+  node_group_name = "cache-nodes"
+  node_role_arn   = aws_iam_role.eks_node_group_general_purpose_role.arn
+
+  subnet_ids = values(var.private_subnets)
+
+  capacity_type   = "ON_DEMAND"
+  ami_type        = "AL2023_ARM_64_STANDARD" # "AL2023_x86_64_STANDARD"
+  instance_types  = ["t4g.medium"]
+  release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
+
+  scaling_config {
+    desired_size = 4
+    max_size     = 4
+    min_size     = 4
+  }
+
+  taint {
+    key    = "dedicated"
+    value  = "cache"
+    effect = "NO_SCHEDULE"
+  }
+
+  labels = {
+    role = "cache"
+  }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.amazon_eks_worker_node_policy,
+    aws_iam_role_policy_attachment.amazon_eks_cni_policy,
+    aws_iam_role_policy_attachment.amazon_ecr_readonly,
+    aws_iam_role_policy_attachment.amazon_ssm_managed_instance_core,
+    aws_iam_role_policy_attachment.cloudwatch_agent_server_policy
+  ]
+}
+
+# resource "aws_eks_node_group" "general_purpose_nodes" {
 #   cluster_name    = aws_eks_cluster.main.name
-#   node_group_name = "cache-nodes"
+#   node_group_name = "general-purpose-nodes"
 #   node_role_arn   = aws_iam_role.eks_node_group_general_purpose_role.arn
 #   subnet_ids      = values(var.private_subnets)
 
-#   ami_type        = "AL2023_ARM_64_STANDARD" # "AL2023_x86_64_STANDARD"
-#   instance_types  = ["t4g.medium"]
-#   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
+#   ami_type       = "AL2023_ARM_64_STANDARD" # "AL2023_x86_64_STANDARD"
+#   instance_types = ["t4g.medium"]
 
 #   scaling_config {
-#     desired_size = 6
-#     max_size     = 6
-#     min_size     = 6
+#     desired_size = 1
+#     max_size     = 3
+#     min_size     = 1
 #   }
 
-#   taint {
-#     key    = "dedicated"
-#     value  = "cache"
-#     effect = "NO_SCHEDULE"
-#   }
-
-#   labels = {
-#     role = "cache"
-#   }
+#   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
 
 #   depends_on = [
 #     aws_iam_role_policy_attachment.amazon_eks_worker_node_policy,
