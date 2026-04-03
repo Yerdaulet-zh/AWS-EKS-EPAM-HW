@@ -66,6 +66,20 @@ resource "aws_kms_key_policy" "main" {
             "aws:PrincipalOrgID" = data.aws_organizations_organization.current.id
           }
         }
+      },
+
+      # EKS
+      {
+        Sid    = "AllowEKSService"
+        Effect = "Allow"
+        Principal = {
+          Service = "eks.amazonaws.com"
+        }
+        Action = [
+          "kms:DescribeKey",
+          "kms:CreateGrant"
+        ]
+        Resource = "*"
       }
     ]
   })
