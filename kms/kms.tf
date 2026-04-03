@@ -19,7 +19,7 @@ resource "aws_kms_key_policy" "main" {
         Sid    = "EnableRoot"
         Effect = "Allow"
         Principal = {
-          AWS = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root", "${data.aws_iam_role.sso_admin.arn}"]
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
         }
         Action   = "kms:*"
         Resource = "*"
