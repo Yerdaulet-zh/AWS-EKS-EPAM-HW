@@ -7,6 +7,6 @@ resource "aws_eks_access_entry" "admin_access" {
   principal_arn = data.aws_iam_role.sso_admin.arn
   type          = "STANDARD"
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }

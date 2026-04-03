@@ -8,6 +8,6 @@ resource "aws_eks_access_policy_association" "admin" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
