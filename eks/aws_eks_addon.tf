@@ -26,6 +26,12 @@ resource "aws_eks_addon" "core_dns" {
       }
     }
   })
+
+  timeouts {
+    create = "120m"
+    update = "120m"
+    delete = "120m"
+  }
 }
 
 # ------ VPC CNI Addon ------
@@ -82,6 +88,12 @@ resource "aws_eks_addon" "vpc_cni" {
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "PRESERVE"
   preserve                    = true
+
+  timeouts {
+    create = "120m"
+    update = "120m"
+    delete = "120m"
+  }
 }
 
 # ------ Kube-Proxy Addon ------
@@ -98,6 +110,12 @@ resource "aws_eks_addon" "kube_proxy" {
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "PRESERVE"
   preserve                    = true
+
+  timeouts {
+    create = "120m"
+    update = "120m"
+    delete = "120m"
+  }
 }
 
 # ------ EBS CSI Addon ------
@@ -146,4 +164,10 @@ resource "aws_eks_addon" "ebs_csi" {
   resolve_conflicts_on_create = "OVERWRITE"
   resolve_conflicts_on_update = "PRESERVE"
   preserve                    = true
+
+  timeouts {
+    create = "120m"
+    update = "120m"
+    delete = "120m"
+  }
 }
