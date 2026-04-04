@@ -27,7 +27,8 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
   }
 
   labels = {
-    role = "frontend"
+    role                             = "frontend"
+    "node-role.kubernetes.io/worker" = "worker"
   }
 
   depends_on = [
@@ -37,6 +38,10 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
     aws_iam_role_policy_attachment.amazon_ssm_managed_instance_core,
     aws_iam_role_policy_attachment.cloudwatch_agent_server_policy
   ]
+
+  tags = {
+    Name = "${var.cluster_name}-general-purpose-node"
+  }
 }
 
 resource "aws_eks_node_group" "cache_nodes" {
@@ -64,7 +69,8 @@ resource "aws_eks_node_group" "cache_nodes" {
   }
 
   labels = {
-    role = "cache"
+    role                             = "cache"
+    "node-role.kubernetes.io/worker" = "worker"
   }
 
   depends_on = [
@@ -74,6 +80,10 @@ resource "aws_eks_node_group" "cache_nodes" {
     aws_iam_role_policy_attachment.amazon_ssm_managed_instance_core,
     aws_iam_role_policy_attachment.cloudwatch_agent_server_policy
   ]
+
+  tags = {
+    Name = "${var.cluster_name}-general-purpose-node"
+  }
 }
 
 # resource "aws_eks_node_group" "general_purpose_nodes" {
