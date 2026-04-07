@@ -13,7 +13,7 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
   node_group_name = "general-purpose-nodes"
   node_role_arn   = aws_iam_role.eks_node_group_general_purpose_role.arn
 
-  subnet_ids = values(var.private_subnets)
+  subnet_ids = values(data.terraform_remote_state.vpc.outputs.private_subnets)
 
   capacity_type   = "SPOT"
   instance_types  = ["t4g.medium", "t4g.large"]
@@ -49,7 +49,7 @@ resource "aws_eks_node_group" "cache_nodes" {
   node_group_name = "cache-nodes"
   node_role_arn   = aws_iam_role.eks_node_group_general_purpose_role.arn
 
-  subnet_ids = values(var.private_subnets)
+  subnet_ids = values(data.terraform_remote_state.vpc.outputs.private_subnets)
 
   capacity_type   = "ON_DEMAND"
   ami_type        = "AL2023_ARM_64_STANDARD" # "AL2023_x86_64_STANDARD"
@@ -91,7 +91,7 @@ resource "aws_eks_node_group" "monitoring_nodes" {
   node_group_name = "monitoring-nodes"
   node_role_arn   = aws_iam_role.eks_node_group_general_purpose_role.arn
 
-  subnet_ids = values(var.private_subnets)
+  subnet_ids = values(data.terraform_remote_state.vpc.outputs.private_subnets)
 
   capacity_type   = "ON_DEMAND"
   instance_types  = ["t4g.medium"]
