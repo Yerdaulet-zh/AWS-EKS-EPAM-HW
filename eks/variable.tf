@@ -2,10 +2,6 @@ variable "cluster_name" {
   type = string
 }
 
-variable "vpc_id" {
-  type = string
-}
-
 variable "subnet_ids" {
   description = "a map of subnet ids of VPC on which the cluster will operate"
   type        = map(string)
