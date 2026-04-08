@@ -29,7 +29,7 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
 
   labels = {
     role                             = "frontend"
-    "node-role.kubernetes.io/worker" = "worker"
+    "node-role.kubernetes.io/worker" = "frontend"
   }
 
   depends_on = [
@@ -72,7 +72,7 @@ resource "aws_eks_node_group" "cache_nodes" {
 
   labels = {
     role                             = "cache"
-    "node-role.kubernetes.io/worker" = "worker"
+    "node-role.kubernetes.io/worker" = "cache"
   }
 
   depends_on = [
@@ -109,7 +109,7 @@ resource "aws_eks_node_group" "monitoring_nodes" {
 
   labels = {
     role                             = "monitoring"
-    "node-role.kubernetes.io/worker" = "worker"
+    "node-role.kubernetes.io/worker" = "monitoring"
   }
 
   depends_on = [
