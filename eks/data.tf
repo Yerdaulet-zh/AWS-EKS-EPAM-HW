@@ -7,3 +7,13 @@ data "terraform_remote_state" "vpc" {
     profile = "895587011312_AdministratorAccess"
   }
 }
+
+# Fetch the NVIDIA-optimized AMI version
+data "aws_ssm_parameter" "eks_ami_nvidia_amazon_linux_2023" {
+  name = "/aws/service/eks/optimized-ami/${aws_eks_cluster.main.version}/amazon-linux-2023/x86_64/nvidia/recommended/release_version"
+}
+
+# General-purpose EKS-optimized AMI
+data "aws_ssm_parameter" "eks_ami_amazon_linux_2023" {
+  name = "/aws/service/eks/optimized-ami/${aws_eks_cluster.main.version}/amazon-linux-2023/arm64/standard/recommended/release_version"
+}
