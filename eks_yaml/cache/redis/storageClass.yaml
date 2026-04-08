@@ -19,5 +19,12 @@ reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
 mountOptions:
-  - discard # Enables TRIM support for better performance and longevity
+  - discard # Enables Continuous TRIM support for better performance and longevity
   - noatime # Improves performance by not updating access times on the volume
+allowedTopologies:
+- matchLabelExpressions:
+  - key: topology.kubernetes.io/zone
+    values:
+    - us-central-1a
+    - us-central-1b
+    - us-central-1c
