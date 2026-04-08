@@ -1,0 +1,23 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: redis-gp3-pro
+provisioner: ebs.csi.aws.com
+parameters:
+  type: gp3
+  fsType: ext4
+  # Performance Tuning
+  iops: "3000"
+  throughput: "125"
+  # Security
+  encrypted: "true"
+  kmsKeyId: ""
+  # Metadata
+  tagSpecification_1: "Environment=Production"
+  tagSpecification_2: "Team=Database"
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+mountOptions:
+  - discard # Enables TRIM support for better performance and longevity
+  - noatime # Improves performance by not updating access times on the volume
