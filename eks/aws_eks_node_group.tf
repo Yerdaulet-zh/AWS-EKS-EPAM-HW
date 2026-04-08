@@ -54,15 +54,15 @@ resource "aws_eks_node_group" "cache_nodes" {
     min_size     = 1
   }
 
+  labels = {
+    role                             = "cache"
+    "node-role.kubernetes.io/worker" = "cache"
+  }
+
   taint {
     key    = "dedicated"
     value  = "cache"
     effect = "NO_SCHEDULE"
-  }
-
-  labels = {
-    role                             = "cache"
-    "node-role.kubernetes.io/worker" = "cache"
   }
 
   depends_on = [
@@ -74,7 +74,7 @@ resource "aws_eks_node_group" "cache_nodes" {
   ]
 
   tags = {
-    Name = "${var.cluster_name}-general-purpose-node"
+    Name = "${var.cluster_name}-cache-node"
   }
 }
 
@@ -86,9 +86,9 @@ resource "aws_eks_node_group" "monitoring_nodes" {
   subnet_ids = values(data.terraform_remote_state.vpc.outputs.private_subnets)
 
   capacity_type   = "ON_DEMAND"
-  instance_types  = ["t4g.medium"]
   ami_type        = "AL2023_ARM_64_STANDARD"
   disk_size       = 20
+  instance_types  = ["t4g.medium"]
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
 
   scaling_config {
