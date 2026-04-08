@@ -17,7 +17,7 @@ spec:
       storage: 1Gi
   volumeMode: Filesystem
   storageClassName: redis-gp3-pro
-  datasource:
+  dataSource:
     name: redis-backup-snapshot
     kind: VolumeSnapshot
     apiGroup: snapshot.storage.k8s.io
