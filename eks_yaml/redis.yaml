@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cache
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-config
+  namespace: frontend-web
+data:
+  REDIS_HOST: "172.20.169.42" # "redis-service.cache.svc.cluster.local"
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gp3
+provisioner: ebs.csi.aws.com
+parameters:
+  type: gp3
+  fsType: ext4
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-pvc
+  namespace: cache
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: gp3
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: cache
+data:
+  redis.conf: |
+    maxmemory 256mb
+    maxmemory-policy allkeys-lru
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: cache
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      nodeSelector:
+        role: cache
+      tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "cache"
+        effect: "NoSchedule"
+      containers:
+        - name: redis
+          image: redis:6.2-alpine
+          command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+          ports:
+          - containerPort: 6379
+          volumeMounts:
+          - name: redis-data
+            mountPath: /data
+          - name: config
+            mountPath: /usr/local/etc/redis/
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-pvc
+      - name: config
+        configMap:
+          name: redis-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: cache
+spec:
+  type: ClusterIP
+  selector:
+    app: redis
+  ports:
+  - port: 6379
+    targetPort: 6379
