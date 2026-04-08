@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: cache
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      nodeSelector:
+        role: cache
+      tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "cache"
+        effect: "NoSchedule"
+      containers:
+        - name: redis
+          image: redis:6.2-alpine
+          command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          ports:
+          - containerPort: 6379
+          volumeMounts:
+          - name: redis-data
+            mountPath: /data
+          - name: config
+            mountPath: /usr/local/etc/redis/redis.conf
+            subPath: redis.conf
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: redis-pvc
+      - name: config
+        configMap:
+          name: redis-config
