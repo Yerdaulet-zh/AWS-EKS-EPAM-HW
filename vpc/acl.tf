@@ -6,10 +6,15 @@ resource "aws_network_acl" "acl" {
 }
 
 resource "aws_network_acl_rule" "acl_rule_ingress" {
+  for_each = {
+    "100" = "tcp"
+    "110" = "udp"
+  }
+
   network_acl_id = aws_network_acl.acl.id
-  rule_number    = 100
+  rule_number    = each.key
   egress         = false
-  protocol       = "tcp"
+  protocol       = each.value
   cidr_block     = "0.0.0.0/0"
   rule_action    = "allow"
   from_port      = 0
@@ -17,10 +22,15 @@ resource "aws_network_acl_rule" "acl_rule_ingress" {
 }
 
 resource "aws_network_acl_rule" "acl_rule_egress" {
+  for_each = {
+    "100" = "tcp"
+    "110" = "udp"
+  }
+
   network_acl_id = aws_network_acl.acl.id
-  rule_number    = 100
+  rule_number    = each.key
   egress         = true
-  protocol       = "tcp"
+  protocol       = each.value
   cidr_block     = "0.0.0.0/0"
   rule_action    = "allow"
   from_port      = 0
