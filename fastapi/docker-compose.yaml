@@ -11,7 +11,7 @@ services:
     # build:
     #   context: ./fastapi
     #   dockerfile: Dockerfile
-    image: 895587011312.dkr.ecr.eu-central-1.amazonaws.com/epam-hw-repository:v1.0.5.test
+    image: 895587011312.dkr.ecr.eu-central-1.amazonaws.com/epam-hw-repository:v1.0.6
     ports:
       - "8000:8000"
     environment:
