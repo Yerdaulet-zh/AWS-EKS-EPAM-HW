@@ -4,7 +4,7 @@ metadata:
   name: webapp
   namespace: frontend
 spec:
-  replicas: 2
+  # replicas: 2
   selector:
     matchLabels:
       name: webapp
@@ -20,12 +20,6 @@ spec:
         image: 895587011312.dkr.ecr.eu-central-1.amazonaws.com/epam-hw-repository:v1.0.6
         ports:
         - containerPort: 80
-        env:
-        - name: REDIS_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: webapp-config
-              key: REDIS_HOST
         resources:
           requests:
             cpu: "200m"
@@ -33,3 +27,9 @@ spec:
           limits:
             cpu: "500m"
             memory: "512Mi"
+        env:
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: webapp-config
+              key: REDIS_HOST
