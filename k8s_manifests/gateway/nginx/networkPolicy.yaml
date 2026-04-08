@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-gateway-to-apps
+  namespace: nginx-gateway
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: nginx-gateway
+  policyTypes:
+  - Egress
+  egress:
+  # Allow DNS Resolution
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow traffic to namespaces with gateway-access: "enabled"
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          gateway-access: "enabled"

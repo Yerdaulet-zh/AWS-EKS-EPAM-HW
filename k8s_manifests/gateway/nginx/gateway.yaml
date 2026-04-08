@@ -1,0 +1,27 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: prod-gateway
+  namespace: nginx-gateway
+  annotations:
+    gateway.nginx.org/nginx-proxy-replica-count: "3"
+spec:
+  gatewayClassName: nginx
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+  # - name: https
+  #   protocol: HTTPS
+  #   port: 443
+  #   hostname: "api.yourdomain.com"
+  #   tls:
+  #     mode: Terminate
+  #     certificateRefs:
+  #     - name: your-cert-secret
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            gateway-access: "enabled"
