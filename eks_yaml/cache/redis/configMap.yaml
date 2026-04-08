@@ -5,3 +5,20 @@ metadata:
   namespace: frontend
 data:
   REDIS_HOST: "redis.cache.svc.cluster.local"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: cache
+data:
+  redis.conf: |
+    maxmemory 256mb
+    maxmemory-policy allkeys-lru
+    # --- Persistence Additions ---
+    appendonly yes
+    appendfilename "appendonly.aof"
+    dbfilename dump.rdb
+    dir /data
+    save 900 1
+    save 300 10
