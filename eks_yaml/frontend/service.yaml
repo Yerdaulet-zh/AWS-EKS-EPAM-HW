@@ -1,0 +1,12 @@
+apiVersion: app/v1
+kind: Service
+metadata:
+  name: webapp
+  namespace: frontend
+spec:
+  type: ClusterIP
+  selector:
+    name: webapp
+  ports:
+  - port: 80
+    targetPort: 80
