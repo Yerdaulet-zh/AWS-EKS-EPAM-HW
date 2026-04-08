@@ -16,6 +16,7 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
   subnet_ids = values(data.terraform_remote_state.vpc.outputs.private_subnets)
 
   capacity_type   = "SPOT"
+  disk_size       = 20
   instance_types  = ["t4g.medium", "t4g.large"]
   ami_type        = "AL2023_ARM_64_STANDARD"
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
@@ -53,6 +54,7 @@ resource "aws_eks_node_group" "cache_nodes" {
 
   capacity_type   = "ON_DEMAND"
   ami_type        = "AL2023_ARM_64_STANDARD" # "AL2023_x86_64_STANDARD"
+  disk_size       = 20
   instance_types  = ["t4g.medium"]
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
 
@@ -96,6 +98,7 @@ resource "aws_eks_node_group" "monitoring_nodes" {
   capacity_type   = "ON_DEMAND"
   instance_types  = ["t4g.medium"]
   ami_type        = "AL2023_ARM_64_STANDARD"
+  disk_size       = 20
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
 
   scaling_config {
