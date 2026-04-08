@@ -25,6 +25,6 @@ allowedTopologies:
 - matchLabelExpressions:
   - key: topology.kubernetes.io/zone
     values:
-    - us-central-1a
-    - us-central-1b
-    - us-central-1c
+    - eu-central-1a
+    - eu-central-1b
+    - eu-central-1c
