@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-pvc
+  namespace: cache
+  labels:
+    app: redis
+    tier: cache
+    env: production
+  annotations:
+    volume.beta.kubernetes.io/storage-provisioner: ebs.csi.aws.com
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeMode: Filesystem
+  storageClassName: redis-gp3-pro
+  datasource:
+    name: redis-backup-snapshot
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
