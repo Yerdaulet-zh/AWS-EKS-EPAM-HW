@@ -1,4 +1,6 @@
 fastapi/env/
+k8s_manifests/gateway/certificate/imon-work-tls-backup.yaml
+k8s_manifests/gateway/certificate/letsencrypt-account-backup.yaml
 
 # Local .terraform directories
 .terraform/
