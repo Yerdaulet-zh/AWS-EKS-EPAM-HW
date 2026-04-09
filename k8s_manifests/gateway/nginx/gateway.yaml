@@ -18,7 +18,7 @@ spec:
     tls:
       mode: Terminate
       certificateRefs:
-      - name: letsencrypt-dns-account-key
+      - name: imon-work-wildcard-tls
     allowedRoutes:
       namespaces:
         from: Selector
