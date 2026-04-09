@@ -1,19 +1,13 @@
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Certificate
 metadata:
-  name: letsencrypt-dns
+  name: imon-work-wildcard
   namespace: nginx-gateway
 spec:
-  acme:
-    email: yerdaulet.art@gmail.com
-    server: https://acme-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-dns-account-key
-    solvers:
-    - dns01:
-        route53:
-          region: eu-central-1
-      selector:
-        dnsZones:
-          - "imon.work"
-          # - "imon.academy"
+  secretName: imon-work-wildcard-tls
+  issuerRef:
+    name: letsencrypt-dns
+    kind: ClusterIssuer
+  dnsNames:
+  - "imon.work"
+  - "*.imon.work"
