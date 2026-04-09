@@ -1,0 +1,13 @@
+# Install CRDs (standard practice for Helm installs)
+installCRDs: true
+
+serviceAccount:
+  create: true
+  name: "cert-manager"
+  annotations:
+    # Use the value from your terraform output 'cert_manager_iam_role_arn'
+    eks.amazonaws.com/role-arn: "arn:aws:iam::895587011312:role/cert-manager-route53-role"
+
+# Required for the controller to read the projected IRSA token file
+securityContext:
+  fsGroup: 1001
