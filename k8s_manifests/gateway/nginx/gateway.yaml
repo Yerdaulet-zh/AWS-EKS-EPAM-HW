@@ -3,8 +3,6 @@ kind: Gateway
 metadata:
   name: prod-gateway
   namespace: nginx-gateway
-  annotations:
-    gateway.nginx.org/nginx-proxy-replica-count: "3"
 spec:
   gatewayClassName: nginx
   listeners:
