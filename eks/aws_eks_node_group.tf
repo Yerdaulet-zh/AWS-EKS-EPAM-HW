@@ -7,7 +7,7 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
 
   capacity_type   = "SPOT"
   disk_size       = 20
-  instance_types  = ["t4g.medium", "t4g.large"]
+  instance_types  = ["t4g.medium", "t4g.large", "c6g.medium", "m6g.medium", ]
   ami_type        = "AL2023_ARM_64_STANDARD"
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
 
