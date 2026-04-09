@@ -6,6 +6,3 @@ metadata:
     team: devops
     environment: production
     gateway-access: "enabled"
-
-    # helm label for namespace management
-    kubernetes.io/metadata.name: nginx-gateway
