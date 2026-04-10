@@ -3,10 +3,15 @@ kind: Service
 metadata:
   name: webapp-service
   namespace: frontend
+  labels:
+    app: webapp
 spec:
   type: ClusterIP
   selector:
     name: webapp
   ports:
   - port: 80
+    targetPort: 80
+  - name: metrics
+    port: 80
     targetPort: 80
