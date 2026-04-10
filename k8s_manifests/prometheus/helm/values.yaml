@@ -13,3 +13,11 @@ grafana:
   persistence:
     enabled: true
     size: 5Gi
+  env:
+    GF_SERVER_ROOT_URL: "https://todo.imon.work/grafana/"
+    GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+  grafana.ini:
+    server:
+      domain: todo.imon.work
+      root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+      serve_from_sub_path: true
