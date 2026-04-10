@@ -7,7 +7,7 @@ spec:
   parentRefs:
   - name: prod-gateway
     namespace: nginx-gateway
-    sectionName: http
+    sectionName: https
   hostnames:
   - "todo.imon.work"
   rules:
@@ -28,7 +28,7 @@ spec:
   parentRefs:
   - name: prod-gateway
     namespace: nginx-gateway
-    sectionName: http
+    sectionName: https
   hostnames:
   - "todo.imon.work"
   rules:
