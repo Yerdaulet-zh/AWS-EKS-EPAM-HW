@@ -12,8 +12,8 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_amazon_linux_2023.value)
 
   scaling_config {
-    desired_size = 3
-    min_size     = 3
+    desired_size = 2
+    min_size     = 1
     max_size     = 4
   }
 
