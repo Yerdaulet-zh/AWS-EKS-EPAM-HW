@@ -8,7 +8,7 @@ resource "aws_route53_record" "todo" {
   allow_overwrite = true
 
   alias {
-    name                   = "a803cdbde748c4d5d855435ca2e0ec3a-1943418046.eu-central-1.elb.amazonaws.com"
+    name                   = "a33c2fd21f0e54fa4a54c4a3b327000a-2006863013.eu-central-1.elb.amazonaws.com"
     zone_id                = data.aws_elb_hosted_zone_id.main.id
     evaluate_target_health = true
   }
