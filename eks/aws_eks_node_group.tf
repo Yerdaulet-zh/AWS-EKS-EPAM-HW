@@ -18,8 +18,7 @@ resource "aws_eks_node_group" "general_purpose_nodes" {
   }
 
   labels = {
-    role                             = "frontend"
-    "node-role.kubernetes.io/worker" = "frontend"
+    role = "frontend"
   }
 
   depends_on = [
@@ -55,8 +54,7 @@ resource "aws_eks_node_group" "cache_nodes" {
   }
 
   labels = {
-    role                             = "cache"
-    "node-role.kubernetes.io/worker" = "cache"
+    role = "cache"
   }
 
   taint {
@@ -98,8 +96,7 @@ resource "aws_eks_node_group" "monitoring_nodes" {
   }
 
   labels = {
-    role                             = "monitoring"
-    "node-role.kubernetes.io/worker" = "monitoring"
+    role = "monitoring"
   }
 
   depends_on = [
